@@ -109,6 +109,6 @@ if __name__ == '__main__':
             default=None, help="UDP host/port to send copy of MAVLink data to")
     (opts, args) = parser.parse_args()
 
-    node = MavlinkNode(device=opts.device, baudrate=opts.baudrate, 
+    node = MavlinkNode(device=opts.device, baudrate=opts.baudrate,
             export_host=opts.export_host)
     node.run()

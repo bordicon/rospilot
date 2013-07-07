@@ -1,3 +1,6 @@
+var WEB_SOCKET_SWF_LOCATION = "/static/WebSocketMain.swf";
+var WEB_SOCKET_DEBUG = true;
+
 var app = angular.module('rospilot', ['ngResource'])
 .factory('Status', function ($resource) {
       return $resource('api/status');
@@ -28,7 +31,8 @@ var app = angular.module('rospilot', ['ngResource'])
     center: myLatlng,
     mapTypeId: google.maps.MapTypeId.SATELLITE
   }
-  $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  $scope.map = new google.maps.Map(document.getElementById('map-canvas'),
+                                   mapOptions);
 
   $scope.marker = new google.maps.Marker({
       position: myLatlng,

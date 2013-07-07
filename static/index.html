@@ -3,8 +3,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
-    <script src="/static/index.js"></script>
-    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+    <script type="text/javascript" src="/static/index.js"></script>
+    <script type="text/javascript" src="static/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css"/>
   </head>
   <body>
     <div id="map-canvas" style='height:400px;width:500px;'></div>
@@ -12,20 +13,12 @@
     <div ng-controller='status'>
       <span ng-switch on='data.armed'>
         <span ng-switch-when='true'>
-          <h2 style='color:red;'>
-            ARMED
-          </h2>
-          <a href='#' ng-click='disarm()'>
-            disarm
-          </a>
+          <h2 style='color:red;'>ARMED</h2>
+          <a href='#' ng-click='disarm()'>disarm</a>
         </span>
         <span ng-switch-when='false'>
-          <h2>
-            DISARMED
-          </h2>
-          <a href='#' ng-click='arm()'>
-            arm
-          </a>
+          <h2>DISARMED</h2>
+          <a href='#' ng-click='arm()'>arm</a>
         </span>
       </span>
     </div>

@@ -1,1 +1,7 @@
 CherryPy==3.2.4
+distribute==0.6.31
+gevent==0.13.8
+gevent-socketio==0.3.5-rc2
+gevent-websocket==0.3.6
+greenlet==0.4.1
+pyserial==2.6
