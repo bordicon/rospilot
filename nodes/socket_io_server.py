@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 '''
-Copyright 2012 Christopher Berner
+Copyright 2012 Christopher Berner and Borden Liu
 
 This file is part of Rospilot.
 
@@ -40,23 +40,16 @@ class RosPilotNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     QUESTION: Can we request data?
     '''
     def __init__(self):
-        self.lock         = threading.Lock()
-        self.armed        = 'false'
-        self.gps          = {}
         self.pub_set_mode = rospy.Publisher('set_mode', rospilot.msg.BasicMode)
         rospy.Subscriber(
             "basic_status", rospilot.msg.BasicMode, self.handle_status)
         rospy.Subscriber("gpsraw", rospilot.msg.GPSRaw, self.handle_gps)
 
     def handle_status(self, data):
-        with self.lock:
-            self.armed = data.armed
-            self.broadcast_event('armed_status', data.armed)
+        self.broadcast_event('armed_status', data.armed)
 
     def handle_gps(self, data):
-        with self.lock:
-            self.gps = data
-            self.broadcast_event('gps', data)
+        self.broadcast_event('gps', data)
 
     def send_arm(self, arm):
         self.pub_set_mode.publish(arm)
@@ -65,10 +58,7 @@ class RosPilotNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         '''
           Debugging helper
         '''
-        with self.lock:
-            self.gps['lat'] = msg['lat']
-            self.gps['lon'] = msg['lon']
-            self.broadcast_event('gps', data)
+        self.broadcast_event('gps', data)
 
     def on_arm(self, arm_reason):
         self.drone.send_arm('true')

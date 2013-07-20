@@ -2,12 +2,29 @@ var WEB_SOCKET_SWF_LOCATION = "/static/WebSocketMain.swf";
 var WEB_SOCKET_DEBUG = true;
 
 var app = angular.module('rospilot', ['ngResource'])
-.factory('Status', function ($resource) {
-      return $resource('api/status');
-  })
-.factory('Position', function ($resource) {
-      return $resource('api/position');
-  })
+.factory('socket', function($rootscope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+})
 .controller('status', function ($scope, $timeout, Status) {
   $scope.arm = function() {
       $scope.data.armed = true;

@@ -51,8 +51,8 @@ class MavlinkNode:
         #        209 if data.armed else 81, 0)
 
         # So instead we fake the tranmitter signals 
-        self.conn.mav.rc_channels_override_send(self.conn.target_system, 
-                self.conn.target_component, 0, 0, 
+        self.conn.mav.rc_channels_override_send(self.conn.target_system,
+                self.conn.target_component, 0, 0,
                 1000, #throttle to zero
                 2000 if data.armed else 1000, #yaw full right to arm, left to disarm
                 0, 0, 0, 0)
@@ -68,7 +68,7 @@ class MavlinkNode:
         rospy.sleep(10)
 
         self.conn.mav.request_data_stream_send(self.conn.target_system,
-                self.conn.target_component, mavutil.mavlink.MAV_DATA_STREAM_ALL, 
+                self.conn.target_component, mavutil.mavlink.MAV_DATA_STREAM_ALL,
                 self.rate, 1)
         while not rospy.is_shutdown():
             rospy.sleep(0.001)
