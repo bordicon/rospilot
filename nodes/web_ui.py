@@ -95,6 +95,7 @@ class WebUiNode:
         rospy.loginfo("Web UI is running")
         cherrypy.engine.start()
         while not rospy.is_shutdown():
+            rospy.sleep(1)
             pass
         cherrypy.engine.exit()
 

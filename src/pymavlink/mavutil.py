@@ -487,7 +487,7 @@ class mavserial(mavfile):
         self.baud = baud
         self.device = device
         self.autoreconnect = autoreconnect
-        self.port = serial.Serial(self.device, self.baud, timeout=0,
+        self.port = serial.Serial(self.device, self.baud, timeout=None,
                                   dsrdtr=False, rtscts=False, xonxoff=False)
         try:
             fd = self.port.fileno()

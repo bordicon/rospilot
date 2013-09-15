@@ -27,6 +27,7 @@ import rospilot
 import rospy
 from pymavlink import mavutil
 import rospilot.msg
+import cProfile
 
 from optparse import OptionParser
 class MavlinkNode:
@@ -77,7 +78,7 @@ class MavlinkNode:
                 continue
             msg_type = msg.get_type()
             if msg_type == "BAD_DATA":
-                rospy.logwarn("Got bad data")
+                #rospy.logwarn("Got bad data")
                 continue
             if self.export_conn:
                 self.export_conn.mav.send(msg)
@@ -111,4 +112,5 @@ if __name__ == '__main__':
 
     node = MavlinkNode(device=opts.device, baudrate=opts.baudrate,
             export_host=opts.export_host)
-    node.run()
+    cProfile.run('node.run()', 'mavlink.profile')
+r   #node.run()

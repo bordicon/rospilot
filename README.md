@@ -9,3 +9,8 @@ Depends:
   * https://github.com/abourget/gevent-socketio
 * socket.io client
   * https://github.com/learnboost/socket.io/
+
+Getting Started
+===============
+* To launch an instance
+  * roslaunch rospilot rospilot.launch
