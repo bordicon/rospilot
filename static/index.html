@@ -1,15 +1,27 @@
 <html ng-app=rospilot>
   <head>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
-    <script type="text/javascript" src="/static/index.js"></script>
-    <script type="text/javascript" src="static/socket.io.js"></script>
-    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css"/>
+    <script src="/static/angular.min.js"></script>
+    <script src="/static/angular-resource.min.js"></script>
+    <script src="/static/jquery-2.0.3.min.js"></script>
+    <script src="/static/highcharts.js"></script>
+    <script src="/static/index.js"></script>
+    <script src="/static/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css">
   </head>
   <body>
     <div id="map-canvas" style='height:400px;width:500px;'></div>
-    <div ng-controller='position'>{{data.latitude}}, {{data.longitude}}</div>
+    <div ng-controller='position'>
+      <div>Raw Lat: {{data.latitude}}, Lng: {{data.longitude}}</div>
+      <div>Estimated Position: x: {{estimate.position.x|number:3}}m, 
+        y: {{estimate.position.y|number:3}}m,
+        z: {{estimate.position.z|number:3}}m</div>
+      <div>Estimated Velocity: x: {{estimate.velocity.x|number:3}}m/s, 
+        y: {{estimate.velocity.y|number:3}}m/s,
+        z: {{estimate.velocity.z|number:3}}m/s</div>
+      <div>Ground distance: {{data.ground_distance|number:3}}m</div>
+      <div id="position_z_chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    </div>
     <div ng-controller='status'>
       <span ng-switch on='data.armed'>
         <span ng-switch-when='true'>
@@ -21,6 +33,38 @@
           <a href='#' ng-click='arm()'>arm</a>
         </span>
       </span>
+    </div>
+    <div ng-controller='attitude'>
+      <div>
+        <object id="compass" data="/static/compass.svg" type="image/svg+xml">
+        </object>
+        <object id="attitude_svg" data="/static/attitude.svg" type="image/svg+xml">
+        </object>
+      </div>
+      <span>Roll: {{data.roll|number:4}}, 
+        Pitch: {{data.pitch|number:4}}, 
+        Yaw: {{data.yaw|number:4}}</span>
+    </div>
+    <div ng-controller='rcstate'>
+      RC channels: {{data.channel}}
+    </div>
+    <div ng-controller='optical_flow'>
+      Optical Flow: x: {{data.x}}, y: {{data.y}}, quality: {{data.quality}}
+      <a href='#' ng-click='reset()'>
+        reset optical flow
+      </a>
+    </div>
+    <div ng-controller='imu'>
+      <div>
+        Gyro: x: {{data.gyro.x}}, y: {{data.gyro.y}}, z: {{data.gyro.z}}
+      </div>
+      <div>
+        Accel: x: {{data.accel.x}}, y: {{data.accel.y}}, z: {{data.accel.z}}
+      </div>
+      <div>
+        Mag: x: {{data.mag.x}}, y: {{data.mag.y}}, z: {{data.mag.z}}
+      </div>
+      <div id="accel_z_chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
   </body>
 </html>

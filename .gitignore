@@ -37,5 +37,7 @@ nosetests.xml
 .project
 .pydevproject
 
-# vim
+# Vim
 *.swp
+
+.ropeproject

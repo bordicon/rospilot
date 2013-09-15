@@ -29,6 +29,9 @@ add_message_files(
   BasicStatus.msg
   RCState.msg
   GPSRaw.msg
+  IMURaw.msg
+  OpticalFlow.msg
+  PositionEstimate.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -42,6 +45,7 @@ add_message_files(
 generate_messages(
     DEPENDENCIES
     std_msgs
+    geometry_msgs
 )
 
 ###################################
